@@ -10,7 +10,14 @@
         <h2 class="text-xs mb-4"> Kategória: {{ $medicines->category->name }}</h2>
         <h3 class="text-base mb-4"> {{$medicines->description}}</h3>
         <h4 class="text-sm mb-4"> Ár: {{$medicines->price}} Ft</h4>
-        <h5 class="text-sm mb-4"> Vényköteles: {!! $medicines->needPresc ? '<i class="fa-solid fa-check text-green-500"></i>' : '<i class="fa-solid fa-x text-red-500"/>' !!}</h5>
+        <h5 class="text-sm mb-4"> 
+            Vényköteles: 
+            {!! $medicines->needPresc 
+            ? '<i class="fa-solid fa-check text-green-500"></i>' 
+            : '<i class="fa-solid fa-x text-red-500"></i>' 
+            !!}
+        
+        </h5>
         <p class="text-sm mb-4"> További információk: 
             <a href="{{ $medicines->link }}" target="_blank" class="text-blue-400 hover:underline">
                 {{ Str::limit(trim($medicines->link),45) }}

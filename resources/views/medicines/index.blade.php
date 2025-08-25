@@ -9,11 +9,10 @@
 
         <!-- Hozzadás btn -->
         <x-create-button route="medicines.create"/>
-        
      </div>
         <!-- Sikeres létrehozás -->
         @if (session('success'))
-            <div class="mb-4 p-3 rounded bg-green-800 text-green-200 text-sm sm:text-base">
+            <div class="mb-4 p-3 rounded bg-green-800 text-green-200 text-center text-2xl sm:text-xl">
                 {{ session('success') }}
             </div>
         @endif
@@ -24,10 +23,12 @@
                 <span class="font-semibold text-sm sm:text-base">{{ $medicine->name }}</span>
                 <span class="float-right">
                     <a href="{{ route('medicines.show', $medicine->id) }}"
-                       class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-white">Megtekintés
+                       class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-white">
+                       Megtekintés
                     </a>
                     <a href="{{ route('medicines.edit', $medicine->id) }}"
-                       class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-gray-400">Szerkesztés
+                       class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-gray-400">
+                       Szerkesztés
                     </a>
                     <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline">
                         @csrf

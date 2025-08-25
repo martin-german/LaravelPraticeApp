@@ -58,7 +58,6 @@
                 Vényköteles:
             </label>
             <input type="checkbox" id="needPresc" name="needPresc"
-                class="border text-white outline-none border-white rounded shadow-sm focus:outline-none"
             />
         </fieldset>
         <fieldset class="flex flex-col space-y-4">
