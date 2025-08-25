@@ -1,50 +1,34 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Bubo Patika</title>
+    <link rel="shortcut icon" href="{{asset('favicon.svg')}}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Plus+Jakarta+Sans&display=swap" rel="stylesheet">
+    @vite('resources/css/app.css')
+</head>
+<body class="flex flex-col min-h-screen text-black" style="background-color: #283D3B">
 
-        {{-- Inline script to detect system dark mode preference and apply it immediately --}}
-        <script>
-            (function() {
-                const appearance = '{{ $appearance ?? "system" }}';
+    <!-- Header -->
+    <header class="relative justify-center flex items-center shadow-md p-4">
+        <a href="/">
+            <img src="{{asset('bubo-logo.webp')}}" width="150px" height="85px" alt="logo" 
+                 class="mr-4 rounded-full hover:scale-105 transition-all w-20 h-auto sm:w-16 md:w-20 lg:w-28 xl:w-36">
+        </a>
 
-                if (appearance === 'system') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    </header>
 
-                    if (prefersDark) {
-                        document.documentElement.classList.add('dark');
-                    }
-                }
-            })();
-        </script>
+    <!-- Landing content -->
+    <main class="flex-grow flex flex-col items-center justify-center text-center py-20 px-4">
+        <h1 class="text-5xl font-bold font-jakarta text-white mb-6">Üdvözöllek a Dr. Bubo Patikában!</h1>
+        <p class="text-xl text-white mb-8 font-jakarta">Fedezd fel termékeinket és szolgáltatásainkat.</p>
+        <a href="{{ route('layout') }}" class="bg-white text-green-800 font-semibold px-6 py-3 rounded-lg shadow hover:bg-slate-200 hover:text-green-900 transition">
+            Tovább a weboldalra
+        </a>
+    </main>
 
-        {{-- Inline style to set the HTML background color based on our theme in app.css --}}
-        <style>
-            html {
-                background-color: oklch(1 0 0);
-            }
-
-            html.dark {
-                background-color: oklch(0.145 0 0);
-            }
-        </style>
-
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
-
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
-        @routes
-        @viteReactRefresh
-        @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
-        @inertiaHead
-    </head>
-    <body class="font-sans antialiased">
-        @inertia
-    </body>
+    <!-- Footer -->
+    <x-footer/>
+</body>
 </html>
