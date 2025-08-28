@@ -19,6 +19,24 @@
                 class="px-3 py-2 border text-white outline-none border-white rounded shadow-sm focus:outline-none"
             />
         </fieldset>
+        
+        <fieldset class="flex flex-col rounded-lg shadow-md">
+            <label for="tags" class="text-slate-100 text-sm font-semibold tracking-wide">
+                Hatóanyagok kiválasztása:
+            </label>
+            <select id="tags" name="tags[]" multiple
+                class="bg-[#283D3B] text-slate-100 border border-slate-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none transition duration-200"
+            >
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}" class=" hover:bg-green-600 px-2 py-1 rounded-md">
+                        {{ $tag->name }}
+                    </option>
+                @endforeach
+            </select>
+            <p class="text-xs text-slate-400 mt-1">
+                Több hatóanyagot is kiválaszthatsz a Ctrl (Windows) vagy Cmd (Mac) gombbal.
+            </p>
+        </fieldset>            
 
         <fieldset class="flex flex-col space-y-4">
             <label for="category_id" class="font-jakarta text-slate-200  mb-2">

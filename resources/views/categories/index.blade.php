@@ -7,11 +7,9 @@
                 Összes Kategória
             </h1>
 
-            <!-- Hozzadás btn -->
+            <!-- Létrehozás btn -->
             <x-create-button route="categories.create"/>
-
-     </div>
-     
+         </div>
         <!-- Sikeres létrehozás -->
         @if (session('success'))
             <div class="mb-4 p-3 rounded bg-green-800 text-green-200 text-sm sm:text-base">

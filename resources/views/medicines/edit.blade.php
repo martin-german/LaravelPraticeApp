@@ -33,6 +33,25 @@
             </select>
         </fieldset>
 
+        <fieldset class="flex flex-col rounded-lg shadow-md">
+            <label for="tags" class="text-slate-100 text-sm font-semibold tracking-wide">
+                Hatóanyagok kiválasztása:
+            </label>
+            <select id="tags" name="tags[]" multiple
+                class="bg-[#283D3B] text-slate-100 border border-slate-500 rounded-md px-4 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none transition duration-200"
+            >
+            @foreach ($tags as $tag)
+                <option value="{{ $tag->id }}"
+                    {{ in_array($tag->id, old('tags', $medicines->tags->pluck('id')->toArray())) ? 'selected' : '' }}>
+                    {{ $tag->name }}
+                </option>
+             @endforeach
+            </select>
+            <p class="text-xs text-slate-400 mt-1">
+                Több hatóanyagot is kiválaszthatsz a Ctrl (Windows) vagy Cmd (Mac) gombbal.
+            </p>
+        </fieldset>       
+
         <fieldset class="flex flex-col ">
             <label for="name" class="font-jakarta uppercase text-2xl text-slate-200  mb-2">
                Gyógyszer neve:

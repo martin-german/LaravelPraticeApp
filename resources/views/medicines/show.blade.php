@@ -23,14 +23,19 @@
                 {{ Str::limit(trim($medicines->link),45) }}
             </a>
         </p>
+        <div class="mt-4">
+            @foreach ($medicines->tags as $tag)
+                <span class="inline-block bg-yellow-500 text-gray-800 text-xs px-2 py-1 rounded-full mr-2 mb-2">
+                    {{ $tag->name }}
+                </span>
+            @endforeach
+        </div>
     </div>
-    <span>
+     <span>
         <a href="{{ route('medicines.index') }}" class="text-sm hover:underline text-gray-400">
-        Vissza az összes gyógyszerhez
-    </a>
+         Vissza az összes gyógyszerhez
+        </a>
     </span>
-    <div>
-    </div>
 </div>
 
 
