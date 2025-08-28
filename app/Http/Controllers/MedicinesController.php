@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Medicine;
+use App\Models\Tag;
 
 class MedicinesController extends Controller
 {
@@ -13,7 +14,11 @@ class MedicinesController extends Controller
      */
     public function index()
     {
-        $medicines = Medicine::all();
+        $sort_by= request()->query('sort_by','name');
+        $sort_dir= request()->query('sort_dir','asc');
+        
+        //Rendezés név szerint, valamint lapozás
+        $medicines = Medicine::with('tags')->orderBy($sort_by, $sort_dir)->paginate(5);
         return view('medicines.index', compact('medicines'));
     }
 
@@ -23,7 +28,8 @@ class MedicinesController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('medicines.create', compact('categories'));
+        $tags = Tag::all();
+        return view('medicines.create', compact('categories','tags'));
     }
 
     /**
@@ -63,7 +69,9 @@ class MedicinesController extends Controller
             ]
         );
 
-        Medicine::create($request->all());
+        $medicine = Medicine::create($request->all());
+        //Hatóanyag cimke hozzárendelés
+        $medicine->tags()->attach($request->tags);
         return redirect()->route('medicines.index')->with('success', 'A gyógyszer sikeresen hozzáadva.');
     }
 
@@ -72,7 +80,8 @@ class MedicinesController extends Controller
      */
     public function show(string $id)
     {
-        $medicines = Medicine::findOrFail($id);
+        $medicines = Medicine::with('tags')->findOrFail($id);
+        
         return view('medicines.show', compact('medicines'));
     }
 
@@ -83,7 +92,8 @@ class MedicinesController extends Controller
     {
         $medicines = Medicine::findOrFail($id);
         $categories = Category::all();
-        return view('medicines.edit', compact('medicines', 'categories'));
+        $tags = Tag::all();
+        return view('medicines.edit', compact('medicines', 'categories', 'tags'));
     }
 
     /**
@@ -98,6 +108,7 @@ class MedicinesController extends Controller
                 'description' => 'required|min:10',
                 'link' => 'required|url',
                 'needPresc' => 'boolean',
+                'tags' => 'array',
                 'price' => 'nullable|numeric|max:99999',
             ],
             [
@@ -118,6 +129,7 @@ class MedicinesController extends Controller
 
         $medicine = Medicine::findOrFail($id);
         $medicine->update($request->all());
+        $medicine->tags()->sync($request->tags);
         return redirect()->route('medicines.index')->with('success', 'A gyógyszer sikeresen frissítve.');
     }
 
@@ -126,6 +138,8 @@ class MedicinesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $medicine = Medicine::findOrFail($id);
+        $medicine->delete();
+        return redirect()->route('medicines.index')->with('success', 'A gyógyszer sikeresen törölve.'); 
     }
 }

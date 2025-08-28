@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\MedicinesController;
+use \App\Http\Controllers\TagsController;
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,6 +18,7 @@ Route::get('/layout',function(){
 
 Route::resource('categories', CategoriesController::class);
 Route::resource('medicines', MedicinesController::class);
+Route::resource('tags', TagsController::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
