@@ -6,5 +6,8 @@
 *.md diff=markdown
 *.php diff=php
 
+*.php linguist-detectable=true
+*.blade.php linguist-detectable=true
+
 CHANGELOG.md export-ignore
 README.md export-ignore
