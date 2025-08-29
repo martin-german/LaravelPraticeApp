@@ -1,17 +1,17 @@
 <h1 align="center">Dr. Bubo Patika</h1>
-<h4 align="center">Az alábbi LARAVEL project gyakorlási célból készült</h3>
+<h4 align="center">Az alábbi LARAVEL project gyakorlási célból készült</h4>
 
-<p align="left">A megoldás során PostgreSQL-t és TailwindCSS-t használtam. A lokális futtatáshoz minden beállítás megtalálható a .env.exampel fileban. </p>
+<p align="left">A megoldás során PostgreSQL-t és TailwindCSS-t használtam. A lokális futtatáshoz minden beállítás megtalálható a .env.example fileban. </p>
 
-- git clone ...
+- git clone https://github.com/martin-german/LaravelPraticeApp
 - cd LaravelPraticeApp
 - composer install
 - npm install
 - npm run build
-- .env beállitása (APP_KEY!!! - DB)
+- .env beállítása (APP_KEY!!! - DB)
 - APP_KEY generálása: php artisan key:generate
 - php artisan migrate
-- Frontendhez: npm run dev
-- Backendhez: php artisan server --port=16000
+- Frontend futtatás: npm run dev
+- Backend futtatás: php artisan serve --port=16000
 
-<p align="center">Sikeres futást követően az alábbi cimen <span text="bold">http://127.0.0.1:16000 </span> érhető el a project</p>
+<p align="center">Sikeres futást követően az alábbi címen <b>http://127.0.0.1:16000</b> érhető el a project</p>
