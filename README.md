@@ -1,7 +1,7 @@
 <h1 align="center">Dr. Bubo Patika</h1>
 <h4 align="center">Az alábbi LARAVEL project gyakorlási célból készült</h3>
 
-<p align="left">A megoldás során PostgreSQL-t használtam és TailwindCSS-t. A lokális futtatáshoz minden beállítás megtalálható a .env.exampel fileban. </p>
+<p align="left">A megoldás során PostgreSQL-t és TailwindCSS-t használtam. A lokális futtatáshoz minden beállítás megtalálható a .env.exampel fileban. </p>
 
 - git clone ...
 - npm install & npm run build
