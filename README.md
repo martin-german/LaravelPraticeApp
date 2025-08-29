@@ -4,8 +4,11 @@
 <p align="left">A megoldás során PostgreSQL-t és TailwindCSS-t használtam. A lokális futtatáshoz minden beállítás megtalálható a .env.exampel fileban. </p>
 
 - git clone ...
-- npm install & npm run build
-- .env beállitása (APP_KEY!!! - DB)
+- cd LaravelPraticeApp
+- composer install
+- npm install
+- npm run build
+- .env beállitása (php artisan key:generate [APP_KEY!!! - DB])
 - php artisan migrate
 - Frontendhez: npm run dev
 - Backendhez: php artisan server --port=16000
