@@ -8,7 +8,8 @@
 - composer install
 - npm install
 - npm run build
-- .env beállitása (php artisan key:generate [APP_KEY!!! - DB])
+- .env beállitása (APP_KEY!!! - DB)
+- APP_KEY generálása: php artisan key:generate
 - php artisan migrate
 - Frontendhez: npm run dev
 - Backendhez: php artisan server --port=16000
