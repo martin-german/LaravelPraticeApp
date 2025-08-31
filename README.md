@@ -16,3 +16,10 @@
 - Backend futtatás: php artisan serve --port=16000
 
 <p align="center">Sikeres futást követően az alábbi címen <b>http://127.0.0.1:16000</b> érhető el a project</p>
+<p align="left">Bejelentkezéshez: 
+</br>
+admin@admin.com
+</br>
+admin123
+</p>
+
