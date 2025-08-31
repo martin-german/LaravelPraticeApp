@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Plus+Jakarta+Sans&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
-<body class="flex flex-col min-h-screen text-black" style="background-color: #283D3B">
+<body class="flex flex-col min-h-screen text-black bg-[#283D3B]" >
 
     <!-- Header -->
     <header class="relative justify-center flex items-center shadow-md p-4">
@@ -23,9 +23,15 @@
     <main class="flex-grow flex flex-col items-center justify-center text-center py-20 px-4">
         <h1 class="text-5xl font-bold font-jakarta text-white mb-6">Üdvözöllek a Dr. Bubo Patikában!</h1>
         <p class="text-xl text-white mb-8 font-jakarta">Fedezd fel termékeinket és szolgáltatásainkat.</p>
+        <div class="flex flex-row gap-6">
         <a href="{{ route('layout') }}" class="bg-white text-green-800 font-semibold px-6 py-3 rounded-lg shadow hover:bg-slate-200 hover:text-green-900 transition">
-            Tovább a weboldalra
+            Folytatás Vendégként
         </a>
+        <!-- Ha már be vagyunk lépve akkor a layoutra visz át -->
+        <a href="{{ auth()->check() ? route('layout') : route('login') }}" class="bg-white text-green-800 font-semibold px-6 py-3 rounded-lg shadow hover:bg-slate-200 hover:text-green-900 transition">
+            Folytatás Adminként
+        </a>
+         </div>
     </main>
 
     <!-- Footer -->

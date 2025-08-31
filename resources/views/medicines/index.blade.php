@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.main-layout')
 
 @section('content')
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 text-white font-jakarta">
@@ -10,13 +10,15 @@
             <x-create-button route="medicines.create"/>
         </div>
         <!-- Link a hatóanyagokhoz és rendezés -->
-        <div class="flex flex-grow justify-between mb-4 sm:mb-6">
-            <a href="{{ route('tags.index') }}" class="hover:text-green-700 hover:underline">Hatóanyagok megtekintése</a>
-             <span class="space-x-2 text-center items-center text-sm sm:text-base">
-                    <a href="{{route('medicines.index',array_merge(request()->query(),['sort_by' => 'name', 'sort_dir' => 'asc']))}}">Rendezés A-Z</a>
-                    <a href="{{route('medicines.index',array_merge(request()->query(),['sort_by' => 'name', 'sort_dir' => 'desc']))}}">| Rendezés Z-A</a>
-            </span>
-        </div>
+        @if(auth()->check())
+            <div class="flex flex-grow justify-between mb-4 sm:mb-6">
+                <a href="{{ route('tags.index') }}" class="hover:text-green-700 hover:underline">Hatóanyagok megtekintése</a>
+                <span class="space-x-2 text-center items-center text-sm sm:text-base">
+                        <a href="{{route('medicines.index',array_merge(request()->query(),['sort_by' => 'name', 'sort_dir' => 'asc']))}}">Rendezés A-Z</a>
+                        <a href="{{route('medicines.index',array_merge(request()->query(),['sort_by' => 'name', 'sort_dir' => 'desc']))}}">| Rendezés Z-A</a>
+                </span>
+            </div>
+        @endif
 
         <!-- Sikeres létrehozás -->
         @if (session('success'))
@@ -43,17 +45,20 @@
                        class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-white">
                        Megtekintés
                     </a>
-                    <a href="{{ route('medicines.edit', $medicine->id) }}"
-                       class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-gray-400">
-                       Szerkesztés
-                    </a>
-                    <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-red-500"
-                                onclick="return confirm('Biztosan törölni szeretnéd ezt a kategóriát?')">Törlés
-                        </button>
-                    </form>
+                    <!-- Ha a user nincs belépve nem mutatja a routokat.-->
+                    @if(auth()->check())
+                        <a href="{{ route('medicines.edit', $medicine->id) }}"
+                        class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-gray-400">
+                        Szerkesztés
+                        </a>
+                        <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-red-500"
+                                    onclick="return confirm('Biztosan törölni szeretnéd ezt a kategóriát?')">Törlés
+                            </button>
+                        </form>
+                    @endif
                 </span>
             </li>
         @endforeach

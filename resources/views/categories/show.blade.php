@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.main-layout')
 
 @section('content')
 
@@ -20,18 +20,20 @@
                                class="text-xs sm:text-sm hover:underline text-white">
                                Megtekintés
                             </a>
-                            <a href="{{ route('medicines.edit', $medicine->id) }}"
-                               class="text-xs sm:text-sm hover:underline text-gray-400">
-                               Szerkesztés
-                            </a>
-                            <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-xs sm:text-sm hover:underline text-red-500"
-                                        onclick="return confirm('Biztosan törölni szeretnéd ezt a terméket?')">
-                                    Törlés
-                                </button>
-                            </form>
+                            @if(auth()->check())
+                                <a href="{{ route('medicines.edit', $medicine->id) }}"
+                                class="text-xs sm:text-sm hover:underline text-gray-400">
+                                Szerkesztés
+                                </a>
+                                <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-xs sm:text-sm hover:underline text-red-500"
+                                            onclick="return confirm('Biztosan törölni szeretnéd ezt a terméket?')">
+                                        Törlés
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </li>
@@ -50,18 +52,21 @@
                                class="text-xs sm:text-sm hover:underline text-white">
                                Megtekintés
                             </a>
-                            <a href="{{ route('medicines.edit', $medicine->id) }}"
-                               class="text-xs sm:text-sm hover:underline text-gray-400">
-                               Szerkesztés
-                            </a>
-                            <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-xs sm:text-sm hover:underline text-red-500"
-                                        onclick="return confirm('Biztosan törölni szeretnéd ezt a terméket?')">
-                                    Törlés
-                                </button>
-                            </form>
+                            <!-- Ha a user nincs belépve nem mutatja a routokat.-->
+                            @if(auth()->check())
+                                <a href="{{ route('medicines.edit', $medicine->id) }}"
+                                class="text-xs sm:text-sm hover:underline text-gray-400">
+                                Szerkesztés
+                                </a>
+                                <form action="{{ route('medicines.destroy', $medicine->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-xs sm:text-sm hover:underline text-red-500"
+                                            onclick="return confirm('Biztosan törölni szeretnéd ezt a terméket?')">
+                                        Törlés
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </li>

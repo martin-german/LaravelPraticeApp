@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.main-layout')
 
 @section('content')
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 text-white font-jakarta">
@@ -26,16 +26,19 @@
                     <a href="{{ route('categories.show', $category->id) }}"
                        class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-white">Megtekintés
                     </a>
-                    <a href="{{ route('categories.edit', $category->id) }}"
-                       class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-gray-400">Szerkesztés
-                    </a>
-                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-red-500"
-                                onclick="return confirm('Biztosan törölni szeretnéd ezt a kategóriát?')">Törlés
-                        </button>
-                    </form>
+                    <!-- Ha a user nincs belépve nem mutatja a routokat.-->
+                    @if(auth()->check())
+                        <a href="{{ route('categories.edit', $category->id) }}"
+                        class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-gray-400">Szerkesztés
+                        </a>
+                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="ml-2 sm:ml-4 text-xs sm:text-sm hover:underline text-red-500"
+                                    onclick="return confirm('Biztosan törölni szeretnéd ezt a kategóriát?')">Törlés
+                            </button>
+                        </form>
+                    @endif    
                 </span>
             </li>
         @endforeach

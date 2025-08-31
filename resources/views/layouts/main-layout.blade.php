@@ -27,9 +27,6 @@
     <!-- Main content -->
     <main class="flex-grow">
         @yield('content')
-        <div class="flex flex-grow text-white items-center justify-center flex-col">
-           
-        </div>
     </main>
 
     <!-- Footer -->
