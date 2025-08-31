@@ -11,6 +11,7 @@
 - .env beállítása (APP_KEY!!! - DB)
 - APP_KEY generálása: php artisan key:generate
 - php artisan migrate
+- php artisan db:seed
 - Frontend futtatás: npm run dev
 - Backend futtatás: php artisan serve --port=16000
 
