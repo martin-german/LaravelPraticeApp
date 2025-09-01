@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\Medicine;
+//use App\Models\Medicine;
+use App\Http\Requests\CategoriesRequest;
 
 class CategoriesController extends Controller
 {
@@ -13,7 +14,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::getAll();
         return view('categories.index', compact('categories'));
     }
 
@@ -28,24 +29,12 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriesRequest $request)
     {
-        $request->validate(
-            [
-                'name' => 'required|min:3|max:255',
-            ],
-            [
-                'name.required' => 'A kategória neve megadása kötelező.',
-                'name.min' => 'A kategória neve legalább 3 karakter hosszúnak kell legyen.',
-                'name.max' => 'A kategória neve maximum 255 karakter hosszú lehet.',
-            ]
-        );
-
-        $category = new Category();
-        $category->name = $request->name;
-        $category->save();
-
-        return redirect()->route('categories.index')->with('success', 'Kategória sikeresen létrehozva.');
+        $category = Category::createCategory($request->validated());
+        
+        return redirect()->route('categories.index')
+        ->with('success','Kategória sikeresen létrehozva.');
     }
 
     /**
@@ -69,23 +58,11 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoriesRequest $request, string $id)
     {
-        $request->validate(
-            [
-                'name' => 'required|min:3|max:255',
-            ],
-            [
-                'name.required' => 'A kategória neve megadása kötelező.',
-                'name.min' => 'A kategória neve legalább 3 karakter hosszúnak kell legyen.',
-                'name.max' => 'A kategória neve maximum 255 karakter hosszú lehet.',
-            ]
-        );
-        
-        $category = Category::findOrFail($id);
-        $category->name = $request->name;
-        $category->save();
-        return redirect()->route('categories.index')->with('success', 'Kategória sikeresen frissítve.');
+        Category::updateCategory($id, $request->validated());
+        return redirect()->route('categories.index')
+        ->with('success', 'Kategória sikeresen frissítve.');
     }
 
     /**
