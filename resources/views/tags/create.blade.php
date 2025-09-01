@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.main-layout')
 
 @section('content')
 <div class="max-w-lg border border-slate-400 mx-auto mt-10 p-6 rounded-lg shadow-2xl" style="background-color: #283D3B">

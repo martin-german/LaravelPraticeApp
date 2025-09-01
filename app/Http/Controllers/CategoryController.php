@@ -7,7 +7,7 @@ use App\Models\Category;
 //use App\Models\Medicine;
 use App\Http\Requests\CategoriesRequest;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,7 +42,7 @@ class CategoriesController extends Controller
      */
     public function show(string $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::getSingle($id);
         return view('categories.show', compact('category'));
     }
 
@@ -70,8 +70,7 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
+        $category = Category::deleteCategory($id);
         return redirect()->route('categories.index')->with('success', 'Kategória sikeresen törölve.');
     }
 }

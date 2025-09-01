@@ -21,16 +21,29 @@ class Category extends Model
         return self::all();
     }
 
+    //Controller show
+    public static function getSingle(string $category_id){
+        $category = self::findOrFail($category_id);
+        return $category;
+    }
+
     //Controller store
     public static function createCategory(array $data){
         return self::create($data);
     }
 
     //Controller update
-    public static function updateCategory(string $id, array $data)
+    public static function updateCategory(string $category_id, array $data)
     {
-        $category = self::findOrFail($id);
+        $category = self::findOrFail($category_id);
         $category->update($data);
+        return $category;
+    }
+
+    //Controller destroy
+    public static function deleteCategory(string $category_id){
+        $category = self::findOrFail($category_id);
+        $category->delete();
         return $category;
     }
 }
