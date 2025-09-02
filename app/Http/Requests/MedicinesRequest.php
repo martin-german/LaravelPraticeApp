@@ -14,6 +14,11 @@ class MedicinesRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation(){
+        $this->merge([
+            'needPresc' => $this->has('needPresc')
+        ]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -43,7 +48,7 @@ class MedicinesRequest extends FormRequest
                 'description.min' => 'A leírásnak legalább 10 karakter hosszúnak kell lennie.',
                 'link.required' => 'A link megadása kötelező.',
                 'link.url' => 'A megadott link nem érvényes URL.',
-                'needPresc.boolean' => 'Az "Szükséges recept" mező csak igaz vagy hamis értéket fogadhat el.',
+                'needPresc.boolean' => 'A "Vényköteles" mező csak igaz vagy hamis értéket fogadhat el.',
                 'price.numeric' => 'Az árnak numerikus értéknek kell lennie.',
                 'price.min' => 'Az ár nem lehet negatív szám.',
      ];

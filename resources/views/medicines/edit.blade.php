@@ -4,14 +4,14 @@
 
 <div class="max-w-lg border border-slate-400 mx-auto mt-10 p-6 rounded-lg shadow-2xl " style="background-color: #283D3B">
     <h1 class="font-jakarta uppercase text-2xl tracking-widest font-black text-white  mb-6">
-      <span class="font-black text-gray-900"> {{$medicines->name}} </span> Szerkesztése
+      <span class="font-black text-gray-900"> {{$medicine->name}} </span> Szerkesztése
     </h1>
 
     <!-- Hibakezelés -->
     <x-error-handle/>
 
     <!-- Gyógyszer szerkesztése -->
-   <form action="{{ route('medicines.update', $medicines->id) }}" method="POST" class="space-y-4">
+   <form action="{{ route('medicines.update', $medicine->id) }}" method="POST" class="space-y-4">
         @csrf
         @method('PUT')
         <fieldset class="flex flex-col space-y-4">
@@ -23,7 +23,7 @@
             >
             @foreach ($categories as $category)
                 <option class="text-black" value="{{ $category->id }}"
-                    {{ old('category_id', $medicines->category_id) 
+                    {{ old('category_id', $medicine->category_id) 
                     == $category->id 
                     ? 'selected' 
                     : '' }}>
@@ -42,7 +42,7 @@
             >
             @foreach ($tags as $tag)
                 <option value="{{ $tag->id }}"
-                    {{ in_array($tag->id, old('tags', $medicines->tags->pluck('id')->toArray())) ? 'selected' : '' }}>
+                    {{ in_array($tag->id, old('tags', $medicine->tags->pluck('id')->toArray())) ? 'selected' : '' }}>
                     {{ $tag->name }}
                 </option>
              @endforeach
@@ -56,7 +56,7 @@
             <label for="name" class="font-jakarta uppercase text-2xl text-slate-200  mb-2">
                Gyógyszer neve:
             </label>
-            <input type="text" id="name" name="name" value="{{ old('name',$medicines->name )}}" required
+            <input type="text" id="name" name="name" value="{{ old('name',$medicine->name )}}" required
             class="px-3 py-2 border w-[250px] text-white outline-none border-white rounded shadow-sm focus:outline-none  "
             />
         </fieldset>
@@ -67,7 +67,7 @@
             </label>
             <textarea type="text" id="description" name="description" required
                 class="px-3 resize-none w-full h-[150px] py-2 border text-white outline-none border-white rounded shadow-sm focus:outline-none"
-            =>{{ old('description', $medicines->description) }}
+            =>{{ old('description', $medicine->description) }}
             </textarea>
         </fieldset>
 
@@ -75,7 +75,7 @@
             <label for="link" class="font-jakarta uppercase text-2xl text-slate-200  mb-2">
             Link:
             </label>
-            <input type="text" id="link" name="link" value="{{ old('link',$medicines->link )}}" required
+            <input type="text" id="link" name="link" value="{{ old('link',$medicine->link )}}" required
             class="px-3 py-2 border w-[250px] text-white outline-none border-white rounded shadow-sm focus:outline-none  "/>
         </fieldset>
 
@@ -85,7 +85,7 @@
             </label>
             <input type="hidden" name="needPresc" value="0">
             <input type="checkbox" id="needPresc" name="needPresc" value="1"
-            {{ old('needPresc',$medicines->needPresc ? 'checked' : '')}} 
+            {{ old('needPresc',$medicine->needPresc ? 'checked' : '')}} 
                 class="text-white outline-none border-white "
             />
         </fieldset>

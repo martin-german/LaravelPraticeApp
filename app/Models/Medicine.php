@@ -22,6 +22,7 @@ class Medicine extends Model
         'needPresc' => 'boolean',
     ];
 
+    //Eloquent (ORM - Object Relational Mapper)
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -32,17 +33,31 @@ class Medicine extends Model
     }
 
     //Controller index
-    public static function getAll(){
-        $sort_by= request()->query('sort_by','name');
-        $sort_dir= request()->query('sort_dir','asc');
-        
-        return self::all();
+    public static function getAllSorted($sortBy = 'name', $sortDir = 'asc', $perPage = 5)
+    {
+        //Sortolja név szerint kövekvő-csökkenő, értékek megjelenitése = 5/oldal
+        return self::with('tags')
+                ->orderBy($sortBy, $sortDir)
+                ->paginate($perPage);
+    }
+
+    //Controller show
+    public static function getSingle(string $medicine_id){
+        $medicine = self::with('tags')->findOrFail($medicine_id);
+        return $medicine;
+    }
+
+    //Controller create
+    public static function createMedicine(){
+        //Tömbel tér vissza ($data) ami beállitja a kategóriát és a tageket.
+       return [
+            'categories' => Category::all(),
+            'tags' => Tag::all()
+        ];
     }
 
     //Controller store
-    public static function createMedicine(array $medicine_data, array $tags = []){
-        $medicine_data['needPresc'] = isset($medicine_data['needPresc']) ? true : false;
-
+    public static function storeMedicine(array $medicine_data, array $tags = []){
         $medicine = self::create($medicine_data);
 
         if(!empty($tags)){
@@ -52,5 +67,32 @@ class Medicine extends Model
         return $medicine;
     }
 
+    //Controller update
+    public static function updateMedicine(string $medicine_id, array $data, array $tags = [])
+    {
+        $medicine = self::findOrFail($medicine_id);
+        $medicine->update($data);
+        $medicine->tags()->sync($tags);
+        return $medicine;
+    }
+
+    //Controller destroy
+    public static function deleteMedicine(string $medicine_id){
+        $medicine = self::findOrFail($medicine_id);
+        $medicine->tags()->detach();
+        $medicine->delete();
+
+        return $medicine;
+    }
+
+    //Controller edit
+    public static function editMedicine(string $id)
+    {
+        return [
+            'medicine' => self::findOrFail($id),
+            'categories' => Category::all(),
+            'tags' => Tag::all()
+        ];
+    }
 
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Category;
 //use App\Models\Medicine;
 use App\Http\Requests\CategoriesRequest;
@@ -31,7 +30,7 @@ class CategoryController extends Controller
      */
     public function store(CategoriesRequest $request)
     {
-        $category = Category::createCategory($request->validated());
+        Category::createCategory($request->validated());
         
         return redirect()->route('categories.index')
         ->with('success','Kategória sikeresen létrehozva.');
@@ -70,7 +69,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::deleteCategory($id);
+        Category::deleteCategory($id);
         return redirect()->route('categories.index')->with('success', 'Kategória sikeresen törölve.');
     }
 }

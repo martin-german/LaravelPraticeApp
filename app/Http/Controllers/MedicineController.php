@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicinesRequest;
-use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Medicine;
 use App\Models\Tag;
@@ -18,8 +17,7 @@ class MedicineController extends Controller
         $sort_by= request()->query('sort_by','name');
         $sort_dir= request()->query('sort_dir','asc');
         
-        //Rendezés név szerint, valamint lapozás
-        $medicines = Medicine::with('tags')->orderBy($sort_by, $sort_dir)->paginate(5);
+        $medicines = Medicine::getAllSorted($sort_by,$sort_dir);
         return view('medicines.index', compact('medicines'));
     }
 
@@ -28,9 +26,8 @@ class MedicineController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $tags = Tag::all();
-        return view('medicines.create', compact('categories','tags'));
+        $data = Medicine::createMedicine();
+        return view('medicines.create', $data);
     }
 
     /**
@@ -38,7 +35,7 @@ class MedicineController extends Controller
      */
     public function store(MedicinesRequest $request)
     {
-        $medicine = Medicine::createMedicine(
+        Medicine::storeMedicine(
             $request->validated(),
             $request->input('tags',[])
         );
@@ -52,9 +49,8 @@ class MedicineController extends Controller
      */
     public function show(string $id)
     {
-        $medicines = Medicine::with('tags')->findOrFail($id);
-        
-        return view('medicines.show', compact('medicines'));
+        $medicine = Medicine::getSingle($id);
+        return view('medicines.show', compact('medicine'));
     }
 
     /**
@@ -62,47 +58,23 @@ class MedicineController extends Controller
      */
     public function edit(string $id)
     {
-        $medicines = Medicine::findOrFail($id);
-        $categories = Category::all();
-        $tags = Tag::all();
-        return view('medicines.edit', compact('medicines', 'categories', 'tags'));
+        $data = Medicine::editMedicine($id);
+        return view('medicines.edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(MedicinesRequest $request, string $id)
     {
-        $request->validate(
-            [
-                'category_id' => 'required|exists:categories,id',
-                'name' => 'required|min:3|max:255',
-                'description' => 'required|min:10',
-                'link' => 'required|url',
-                'needPresc' => 'boolean',
-                'tags' => 'array',
-                'price' => 'nullable|numeric|max:99999',
-            ],
-            [
-                'category_id.required' => 'A kategória kiválasztása kötelező.',
-                'category_id.exists' => 'A kiválasztott kategória érvénytelen.',
-                'name.required' => 'A gyógyszer neve megadása kötelező.',
-                'name.min' => 'A gyógyszer neve legalább 3 karakter hosszúnak kell legyen.',
-                'name.max' => 'A gyógyszer neve maximum 255 karakter hosszú lehet.',
-                'description.required' => 'A leírás megadása kötelező.',
-                'description.min' => 'A leírásnak legalább 10 karakter hosszúnak kell lennie.',
-                'link.required' => 'A link megadása kötelező.',
-                'link.url' => 'A megadott link nem érvényes URL.',
-                'needPresc.boolean' => 'Az "Szükséges recept" mező csak igaz vagy hamis értéket fogadhat el.',
-                'price.numeric' => 'Az árnak numerikus értéknek kell lennie.',
-                'price.min' => 'Az ár nem lehet negatív szám.',
-            ]
+        Medicine::updateMedicine(
+        $id, 
+        $request->validated(), 
+        $request->input('tags',[]) 
         );
 
-        $medicine = Medicine::findOrFail($id);
-        $medicine->update($request->all());
-        $medicine->tags()->sync($request->tags);
-        return redirect()->route('medicines.index')->with('success', 'A gyógyszer sikeresen frissítve.');
+        return redirect()->route('medicines.index')
+        ->with('success', 'A gyógyszer sikeresen frissítve.');
     }
 
     /**
@@ -110,8 +82,8 @@ class MedicineController extends Controller
      */
     public function destroy(string $id)
     {
-        $medicine = Medicine::findOrFail($id);
-        $medicine->delete();
-        return redirect()->route('medicines.index')->with('success', 'A gyógyszer sikeresen törölve.'); 
+        Medicine::deleteMedicine($id);
+        return redirect()->route('medicines.index')
+        ->with('success', 'A gyógyszer sikeresen törölve.'); 
     }
 }

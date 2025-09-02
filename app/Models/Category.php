@@ -11,6 +11,7 @@ class Category extends Model
 
     protected $fillable = ['name'];
     
+    //Eloquent (ORM - Object Relational Mapper)
     public function medicines()
     {
         return $this->hasMany(Medicine::class);
